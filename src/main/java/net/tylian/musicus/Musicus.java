@@ -1,15 +1,17 @@
-package com.example.examplemod;
+package net.tylian.musicus;
 
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-@Mod(modid = ExampleMod.MODID, version = ExampleMod.VERSION)
-public class ExampleMod
+@Mod(modid = Musicus.MOD_ID, name = Musicus.MOD_NAME, version = Musicus.VERSION)
+public class Musicus
 {
-    public static final String MODID = "examplemod";
-    public static final String VERSION = "1.0";
+	public static final String MOD_ID = "Musicus";
+	public static final String MOD_NAME = "Musicus: Dynamics of Sound";
+	public static final String BUILD = "GRADLE:BUILD";
+	public static final String VERSION = "GRADLE:VERSION-" + BUILD;	
     
     @EventHandler
     public void init(FMLInitializationEvent event)
