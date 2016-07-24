@@ -70,10 +70,9 @@ public class ItemGrassHorn extends BaseItem {
 
 	// TODO
 	public boolean canAffectBlock(World world, BlockPos position) {
-		/*IBlockState state = world.getBlockState(position);
+		IBlockState state = world.getBlockState(position);
 		Block block = state.getBlock();
-		return block instanceof BlockBush;*/
-		return true;
+		return block instanceof BlockBush;
 	}
 
 	public void breakGrass(EntityPlayer player, World world, BlockPos src, int amount) {
@@ -95,25 +94,21 @@ public class ItemGrassHorn extends BaseItem {
 		if(targets.size() == 0)
 			return;
 		
-		//BlockPos targetPos = targets.get(random.nextInt(targets.size()));
-		
-		List<BlockPos> targetList = targets.subList(0, Math.min(targets.size(), amount));
-		for(BlockPos targetPos : targetList) {
-			IBlockState state = world.getBlockState(targetPos);
-			Block block = state.getBlock();
-	
-			// TODO add API stuff
-			BreakEvent event = new BreakEvent(world, targetPos, state, player);
-			MinecraftForge.EVENT_BUS.post(event);
-			if (!event.isCanceled()) {
-				if (block.removedByPlayer(state, world, targetPos, player, true)) {
-					block.onBlockDestroyedByPlayer(world, targetPos, state);
-					block.harvestBlock(world, player, targetPos, state,
-							world.getTileEntity(targetPos), null);
-				}
+		BlockPos targetPos = targets.get(random.nextInt(targets.size()));
+		IBlockState state = world.getBlockState(targetPos);
+		Block block = state.getBlock();
+
+		// TODO add API stuff
+		BreakEvent event = new BreakEvent(world, targetPos, state, player);
+		MinecraftForge.EVENT_BUS.post(event);
+		if (!event.isCanceled()) {
+			if (block.removedByPlayer(state, world, targetPos, player, true)) {
+				block.onBlockDestroyedByPlayer(world, targetPos, state);
+				block.harvestBlock(world, player, targetPos, state,
+						world.getTileEntity(targetPos), null);
 			}
-			
-			world.playEvent(2001, targetPos, Block.getStateId(state));
 		}
+		
+		world.playEvent(2001, targetPos, Block.getStateId(state));
 	}
 }
